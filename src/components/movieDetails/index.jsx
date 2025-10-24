@@ -4,12 +4,25 @@ import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
+import SavingsIcon from '@mui/icons-material/Savings';
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import { round } from "lodash";
 
+function MoneyFormat(labelValue) 
+  {
+  return Math.abs(Number(labelValue)) >= 1.0e+9
+       ? Math.abs(Number(labelValue)) / 1.0e+9 + "b"
+       : Math.abs(Number(labelValue)) >= 1.0e+6
+       ? Math.abs(Number(labelValue)) / 1.0e+6 + "m"
+       : Math.abs(Number(labelValue)) >= 1.0e+3
+       ? Math.abs(Number(labelValue)) / 1.0e+3 + "k"
+       : Math.abs(Number(labelValue));
+
+   }
 
 const root = {
   display: "flex",
@@ -58,6 +71,10 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
           icon={<StarRate />}
           label={`${movie.vote_average} (${movie.vote_count})`}
         />
+        <Chip icon={<SavingsIcon />} label={`Budget: ${MoneyFormat(movie.budget)}`} />
+        
+
+        
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
 
